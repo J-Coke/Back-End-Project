@@ -2,7 +2,6 @@ const db = require('../');
 const format = require('pg-format');
 const seed = (data) => {
   const { articleData, commentData, topicData, userData } = data;
-  // 1. create tables
   return db
     .query(`DROP TABLE IF EXISTS comments;`)
     .then(() => {
@@ -52,7 +51,6 @@ const seed = (data) => {
           body TEXT NOT NULL
         );`)
     })
-  // 2. insert data
     .then(() => {
       const topicInput = format(
         `INSERT INTO topics

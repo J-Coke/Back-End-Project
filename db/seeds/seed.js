@@ -2,7 +2,6 @@ const db = require('../');
 const format = require('pg-format');
 const seed = (data) => {
   const { articleData, commentData, topicData, userData } = data;
-  console.log(userData)
   // 1. create tables
   return db
     .query(`DROP TABLE IF EXISTS comments;`)

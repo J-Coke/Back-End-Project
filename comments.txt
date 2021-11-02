@@ -1,0 +1,15 @@
+ comment_id |    author     | article_id | votes |     created_at      |                                                                                         body                                                                                         
+------------+---------------+------------+-------+---------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+          2 | butter_bridge |          1 |    14 | 2020-10-31 03:03:00 | The beautiful thing about treasure is that it exists. Got to find out what kind of sheets these are; not cotton, not rayon, silky.
+          3 | icellusedkars |          1 |   100 | 2020-03-01 01:13:00 | Replacing the quiet elegance of the dark suit and tie with the casual indifference of these muted earth tones is a form of fashion suicide, but, uh, call me crazy — onyou it works.
+          4 | icellusedkars |          1 |  -100 | 2020-02-23 12:01:00 |  I carry a log — yes. Is it funny to you? It is not to me.
+          5 | icellusedkars |          1 |     0 | 2020-11-03 21:00:00 | I hate streaming noses
+          6 | icellusedkars |          1 |     0 | 2020-04-11 22:02:00 | I hate streaming eyes even more
+          7 | icellusedkars |          1 |     0 | 2020-05-15 21:19:00 | Lobster pot
+          8 | icellusedkars |          1 |     0 | 2020-04-14 21:19:00 | Delicious crackerbreads
+          9 | icellusedkars |          1 |     0 | 2020-01-01 03:08:00 | Superficially charming
+         12 | icellusedkars |          1 |     0 | 2020-03-02 07:10:00 | Massive intercranial brain haemorrhage
+         13 | icellusedkars |          1 |     0 | 2020-06-15 11:25:00 | Fruit pastilles
+         18 | butter_bridge |          1 |    16 | 2020-07-21 01:20:00 | This morning, I showered for nine minutes.
+(11 rows)
+

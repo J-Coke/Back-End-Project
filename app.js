@@ -7,7 +7,7 @@ const app = express();
 app.use("/api", apiRouter);
 
 app.all("/*", (req, res) => {
-    res.status(404).send({ msg: "path not found" });
+    res.status(404).send({ msg: "Path not found" });
 });
 
 // app.use(handleCustoms);

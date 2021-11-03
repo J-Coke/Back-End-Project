@@ -14,7 +14,11 @@ exports.fetchArticle = (article_id) => {
         GROUP BY articles.article_id
         ;`, [article_id])
         .then(({rows}) => {
-            return rows
-            
+            console.log(rows)
+            if (rows.length === 0) {
+                return Promise.reject({ status: 404, msg: 'Article not found' })
+            } else {
+                return rows
+            }
         })
     }

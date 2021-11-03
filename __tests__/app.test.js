@@ -46,7 +46,7 @@ describe("GET /api/topics", () => {
 })
 
 describe("GET /api/articles?article_id=", () => {
-    it.only("status 200, responds with a matching article when passed an article id", () => {
+    it("status 200, responds with a matching article when passed an article id", () => {
         const article_id = 1;
         return request(app)
             .get(`/api/articles?article_id=${article_id}`)
@@ -65,7 +65,7 @@ describe("GET /api/articles?article_id=", () => {
                     }]})
             })
     })
-    it.only("status 400, when passed invalid article_id", () => {
+    it("status 400, when passed invalid article_id", () => {
         const article_id = 'INVALID'
         return request(app)
             .get(`/api/articles?article_id=${article_id}`)
@@ -73,6 +73,16 @@ describe("GET /api/articles?article_id=", () => {
             .then(({body}) => {
                 console.log(body)
                 expect(body.msg).toBe("Invalid query")
+            })
+    })
+    it.only("status 404, when passed valid article_id with no correspoding article", () => {
+        const article_id = 999;
+        return request(app)
+            .get(`/api/articles?article_id=${article_id}`)
+            .expect(404)
+            .then(({body}) => {
+                console.log(body)
+                expect(body.msg).toBe("Article not found")
             })
     })
 })

@@ -1,5 +1,5 @@
 const express = require("express");
-const { handleCustoms, handle500s, handlePsqlErrors } = require("./errors.js");
+const { handleCustomErrors, handle500Errors, handlePsqlErrors } = require("./errors.js");
 const apiRouter = require("./routes/api-router.js");
 
 const app = express();
@@ -10,8 +10,8 @@ app.all("/*", (req, res) => {
     res.status(404).send({ msg: "Path not found" });
 });
 
-// app.use(handleCustoms);
+app.use(handleCustomErrors);
 app.use(handlePsqlErrors);
-// app.use(handle500s);
+app.use(handle500Errors);
 
 module.exports = app;

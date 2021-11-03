@@ -45,7 +45,7 @@ describe("GET /api/topics", () => {
     })
 })
 
-describe("GET /api/articles/:article_id", () => {
+describe("GET /api/articles?article_id=", () => {
     it.only("status 200, responds with a matching article when passed an article id", () => {
         const article_id = 1;
         return request(app)
@@ -65,12 +65,14 @@ describe("GET /api/articles/:article_id", () => {
                     }]})
             })
     })
-    it("status 404, when passed invalid article", () => {
+    it.only("status 400, when passed invalid article_id", () => {
+        const article_id = 'INVALID'
         return request(app)
-            .get("/api/article/")
-            .expect(404)
+            .get(`/api/articles?article_id=${article_id}`)
+            .expect(400)
             .then(({body}) => {
-                expect(body.msg).toBe("Path not found")
+                console.log(body)
+                expect(body.msg).toBe("Invalid query")
             })
     })
 })

@@ -45,11 +45,11 @@ describe("GET /api/topics", () => {
     })
 })
 
-describe("GET /api/articles?article_id=", () => {
+describe("GET /api/articles/:article_id", () => {
     it("status 200, responds with a matching article when passed an article id", () => {
         const article_id = 1;
         return request(app)
-            .get(`/api/articles?article_id=${article_id}`)
+            .get(`/api/articles/${article_id}`)
             .expect(200)
             .then(({body}) => {
                 expect(body).toEqual({
@@ -68,21 +68,89 @@ describe("GET /api/articles?article_id=", () => {
     it("status 400, when passed invalid article_id", () => {
         const article_id = 'INVALID'
         return request(app)
-            .get(`/api/articles?article_id=${article_id}`)
+            .get(`/api/articles/${article_id}`)
             .expect(400)
             .then(({body}) => {
-                console.log(body)
-                expect(body.msg).toBe("Invalid query")
+                expect(body.msg).toBe("Bad request!")
             })
     })
-    it.only("status 404, when passed valid article_id with no correspoding article", () => {
+    it("status 404, when passed valid article_id with no correspoding article", () => {
         const article_id = 999;
         return request(app)
-            .get(`/api/articles?article_id=${article_id}`)
+            .get(`/api/articles/${article_id}`)
             .expect(404)
             .then(({body}) => {
-                console.log(body)
                 expect(body.msg).toBe("Article not found")
+            })
+    })
+})
+
+describe("PATCH /api/articles/:article_id", () => {
+    it("status 200, responds with updated article", () => {
+        const article_id = 3
+        const newVote = 99
+        const patchObj = { inc_votes: newVote }
+        return request(app)
+            .patch(`/api/articles/${article_id}`)
+            .send(patchObj)
+            .expect(200)
+            .then(({body}) => {
+                expect(body).toEqual({
+                    article: [{
+                    author: "icellusedkars",
+                    title: "Eight pug gifs that remind me of mitch",
+                    article_id: 3,
+                    body: "some gifs",
+                    topic: "mitch",
+                    created_at: "2020-11-03T09:12:00.000Z",
+                    votes: 99,
+                    }]})
+            })
+    })
+    it("status 400, when passed invalid new_vote", () => {
+        const article_id = 3
+        const newVote = "cat"
+        const patchObj = { inc_votes: newVote }
+        return request(app)
+            .patch(`/api/articles/${article_id}`)
+            .send(patchObj)
+            .expect(400)
+            .then(({body}) => {
+                expect(body.msg).toBe("Bad request!")
+            })
+    })
+    it("status 400, when new_vote value is null", () => {
+        const article_id = 3
+        const newVote = 1
+        const patchObj = { inc_votes: null }
+        return request(app)
+            .patch(`/api/articles/${article_id}`)
+            .send(patchObj)
+            .expect(400)
+            .then(({body}) => {
+                expect(body.msg).toBe("Bad request, input value missing")
+            })
+    })
+    it("status 400, when new_vote missing", () => {
+        const article_id = 3
+        const patchObj = {}
+        return request(app)
+            .patch(`/api/articles/${article_id}`)
+            .send(patchObj)
+            .expect(400)
+            .then(({body}) => {
+                expect(body.msg).toBe("Bad request, input value missing")
+            })
+    })
+    it("status 400, when patchObj incorrectly structured", () => {
+        const article_id = 3
+        const patchObj = { inc_votes : 1, name: 'Mitch' }
+        return request(app)
+            .patch(`/api/articles/${article_id}`)
+            .send(patchObj)
+            .expect(400)
+            .then(({body}) => {
+                expect(body.msg).toBe("Bad request, unrecognised input")
             })
     })
 })

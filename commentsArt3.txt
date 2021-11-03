@@ -1,0 +1,6 @@
+ comment_id |    author     | article_id | votes |     created_at      |          body          
+------------+---------------+------------+-------+---------------------+------------------------
+         10 | icellusedkars |          3 |     0 | 2020-06-20 08:24:00 | git push origin master
+         11 | icellusedkars |          3 |     0 | 2020-09-20 00:10:00 | Ambidextrous marsupial
+(2 rows)
+

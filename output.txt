@@ -1,0 +1,7 @@
+You are now connected to database "nc_news_test" as user "jamescoker".
+ article_id |                 title                  |   body    | votes | topic |    author     |     created_at      
+------------+----------------------------------------+-----------+-------+-------+---------------+---------------------
+          3 | Eight pug gifs that remind me of mitch | some gifs |     1 | mitch | icellusedkars | 2020-11-03 09:12:00
+(1 row)
+
+UPDATE 1

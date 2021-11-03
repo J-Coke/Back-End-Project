@@ -34,7 +34,7 @@ const seed = (data) => {
           article_id SERIAL PRIMARY KEY,
           title VARCHAR NOT NULL,
           body TEXT NOT NULL,
-          votes INT DEFAULT 0,
+          votes INT DEFAULT 0 NOT NULL,
           topic VARCHAR NOT NULL REFERENCES topics(slug),
           author VARCHAR NOT NULL REFERENCES users(username),
           created_at TIMESTAMP NOT NULL

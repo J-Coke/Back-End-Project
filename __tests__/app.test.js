@@ -155,7 +155,7 @@ describe("PATCH /api/articles/:article_id", () => {
     })
 })
 
-describe.only("GET /api/articles", () => {
+describe("GET /api/articles", () => {
     it("status 200, responds with an articles array of objects", () => {
         return request(app)
             .get("/api/articles")
@@ -178,5 +178,85 @@ describe.only("GET /api/articles", () => {
                   );
                 });
               });
+    })
+    it("status 200, responds with an articles array of articles with the topic cat", () => {
+        return request(app)
+            .get(`/api/articles?topic=cats`)
+            .expect(200)
+            .then(({ body }) => {
+                const { articles } = body;
+                expect(articles).toHaveLength(1);
+                expect(articles[0].article_id).toEqual(5);
+              });
+    })
+    it("status 200, responds with an articles array sorted by article_id and defaulting to descending", () => {
+        return request(app)
+            .get(`/api/articles?sort_by=article_id`)
+            .expect(200)
+            .then(({ body }) => {
+                const { articles } = body;
+                expect(articles).toHaveLength(12);
+                expect(articles[0].article_id).toEqual(12);
+                expect(articles[11].article_id).toEqual(1);
+              });
+    })
+    it("status 200, responds with an articles array sorted in ascending order and defaulting to sort by date", () => {
+        return request(app)
+            .get(`/api/articles?order=ASC`)
+            .expect(200)
+            .then(({ body }) => {
+                const { articles } = body;
+                expect(articles).toHaveLength(12);
+                expect(articles[0].article_id).toEqual(7);
+                expect(articles[11].article_id).toEqual(3);
+              });
+    })
+    it("status 200, responds with an articles array sorted and filtered by multiple queries", () => {
+        return request(app)
+            .get(`/api/articles?topic=mitch&sort_by=title&order=ASC`)
+            .expect(200)
+            .then(({ body }) => {
+                const { articles } = body;
+                expect(articles).toHaveLength(11);
+                expect(articles[0].article_id).toEqual(6);
+                expect(articles[10].article_id).toEqual(7);
+              });
+    })
+    it("status 400, responds with Invalid sort query when sort column does not exist", () => {
+        return request(app)
+            .get(`/api/articles?sort_by=wrongColumn`)
+            .expect(400)
+            .then(({body}) => {
+                console.log(body)
+                expect(body.msg).toBe("Invalid sort query");
+              });
+    })
+    it("status 400, responds with Invalid order query when something other than asc or desc is passed", () => {
+        return request(app)
+            .get(`/api/articles?order=incorrect`)
+            .expect(400)
+            .then(({body}) => {
+                console.log(body)
+                expect(body.msg).toBe("Invalid order query");
+              });
+    })
+    it("status 200, responds with empty array when passed valid topic that has no articles associated", () => {
+        return request(app)
+            .get(`/api/articles?topic=paper`)
+            .expect(200)
+            .then(({body}) => {
+                console.log(body)
+                const { articles } = body;
+                expect(articles).toEqual([]);
+            })
+    })
+    it("status 404, responds with Invalid topic when passed invalid topic", () => {
+        return request(app)
+            .get(`/api/articles?topic=invalid`)
+            .expect(404)
+            .then(({body}) => {
+                console.log(body)
+                expect(body.msg).toBe("Invalid topic");
+            })
     })
 })

@@ -24,8 +24,10 @@ exports.patchArticle = (req, res, next) => {
 }
 
 exports.getArticles = (req, res, next) => {
-    fetchArticles()
+    const queries = req.query;
+    fetchArticles(queries)
     .then((articles) => {
+        console.log({articles}, "articles")
         res.status(200).send({articles})
     })
     .catch(next);

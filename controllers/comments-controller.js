@@ -1,12 +1,12 @@
-const { fetchArticleComments } = require("../models/comments-model");
+const { eraseComment } = require("../models/comments-model");
 console.log('in comment cont')
 
-exports.getArticleComments = (req, res, next) => {
-    console.log(req.params, 'req')
-    const { article_id } = req.params;
-    fetchArticleComments(article_id)
-    .then((comments) => {
-        res.status(200).send({comments})
+exports.deleteComment = (req, res, next) => {
+    const { comment_id } = req.params;
+    eraseComment(comment_id)
+    .then((content) => {
+        console.log(content, 'content cont')
+        res.status(204).send({content})
     })
     .catch(next);
 }

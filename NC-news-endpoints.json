@@ -86,4 +86,47 @@
       ]
     }
   }
+  "DELETE /api/comments/:comment_id": {
+    "description": "deletes specified comment and responds with 204 status",
+    "queries": [],
+    "exampleResponse": { "status": 204 }
+  }
+  "PATCH /api/articles/:article_id": {
+    "description": "serves an article with updated votes",
+    "queries": [],
+    "exampleBody": { "inc_votes": 15},
+    "exampleResponse": {
+      "article": [
+        {
+          "author": "butter_bridge",
+          "title": "Living in the shadow of a great man",
+          "article_id": 1,
+          "body": "I find this existence challenging",
+          "topic": "mitch",
+          "created_at": "2020-07-09T20:11:00.000Z",
+          "votes": 115
+        }
+      ]
+    }
+  }
+  "POST /api/articles/:article_id/comments": {
+    "description": "serves a new comment added to specified article",
+    "queries": [],
+    "exampleBody": {
+      "author": "butter_bridge",
+      "body": "I was not proud of what I had learned but I never doubted that it was worth knowing."
+    }
+    "exampleResponse": {
+      "comment": [
+        {
+          "comment_id": 1,
+          "article_id": 8,
+          "votes": 0,
+          "created_at": "2020-07-09T20:11:00.000Z",
+          "author": "butter_bridge",
+          "body": "I was not proud of what I had learned but I never doubted that it was worth knowing.",
+        }
+      ]
+    }
+  }
 }

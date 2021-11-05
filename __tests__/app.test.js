@@ -86,7 +86,7 @@ describe("GET /api/articles/:article_id", () => {
     })
 })
 
-describe("PATCH /api/articles/:article_id", () => {
+describe.ONLY("PATCH /api/articles/:article_id", () => {
     it("status 200, responds with updated article", () => {
         const article_id = 3
         const newVote = 99
@@ -263,7 +263,7 @@ describe("GET /api/articles", () => {
     })
 })
 
-describe.only("GET /api/articles/:article_id/comments", () => {
+describe("GET /api/articles/:article_id/comments", () => {
     it("status 200, responds with array of comment objects for particular article", () => {
         const article_id = 1;
         return request(app)

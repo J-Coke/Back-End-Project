@@ -1,4 +1,4 @@
-const { fetchArticle, amendArticle, fetchArticles } = require("../models/articles-model");
+const { fetchArticle, amendArticle, fetchArticles, fetchArticleComments } = require("../models/articles-model");
 
 exports.getArticle = (req, res, next) => {
     const { article_id } = req.params;
@@ -10,6 +10,7 @@ exports.getArticle = (req, res, next) => {
 }
 
 exports.patchArticle = (req, res, next) => {
+    console.log(req)
     const { inc_votes } = req.body;
     const { article_id } = req.params;
     if (Object.keys(req.body).length > 1) {
@@ -29,6 +30,16 @@ exports.getArticles = (req, res, next) => {
     .then((articles) => {
         console.log({articles}, "articles")
         res.status(200).send({articles})
+    })
+    .catch(next);
+}
+
+exports.getArticleComments = (req, res, next) => {
+    console.log(req.params, 'req')
+    const { article_id } = req.params;
+    fetchArticleComments(article_id)
+    .then((comments) => {
+        res.status(200).send({comments})
     })
     .catch(next);
 }

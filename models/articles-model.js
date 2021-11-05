@@ -72,10 +72,9 @@ exports.fetchArticles = async (queries) => {
         queryStr += ` DESC`
     }
     
-    console.log(queryStr, queryParams, 'q p')
     const {rows} = await db.query(queryStr, queryParams)
 
-    if (rows.length === 0) {
+    if (rows.length === 0 && topic) {
         const result = await db.query(`
         SELECT * FROM topics WHERE slug = $1`, [topic])
         if (result.rows.length === 0) {
@@ -84,12 +83,26 @@ exports.fetchArticles = async (queries) => {
     }
 
     return rows
-        // .then(({rows}) => {
-        //     console.log(rows)
-        //     if (rows.length === 0) {
-        //         return Promise.reject({ status: 404, msg: 'Invalid topic' })
-        //     } else {
-        //         return rows
-        //     }
-        // })
+}
+
+exports.fetchArticleComments = async (article_id) => {
+    console.log(article_id)
+    const queryStr = `
+    SELECT comment_id, votes, created_at, author, body
+    FROM comments
+    WHERE article_id = $1
+    ;`
+    const queryParams = [article_id]
+
+    const {rows} = await db.query(queryStr, queryParams)
+    console.log(rows, 'rows')
+    if (rows.length === 0 && article_id) {
+        const result = await db.query(`SELECT * FROM articles WHERE article_id = $1`, [article_id])
+        console.log(result.rows, 'resultrows')
+        if (result.rows.length === 0) {
+            return Promise.reject({ status: 404, msg: 'Not found' })
+        }
+    }
+
+    return rows
 }

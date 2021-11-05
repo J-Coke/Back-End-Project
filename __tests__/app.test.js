@@ -317,30 +317,8 @@ describe("GET /api/articles/:article_id/comments", () => {
     })
 })
 
-describe("post /api/articles/:article_id/comments", () => {
+describe.only("post /api/articles/:article_id/comments", () => {
     it("status 200, responds with posted comment", () => {
-        const article_id = 8
-        const newComment = {
-            author: "Hunter T",
-            body: 'I was not proud of what I had learned but I never doubted that it was worth knowing.'
-        }
-        return request(app)
-            .post(`/api/articles/${article_id}/comments`)
-            .send(newComment)
-            .expect(200)
-            .then(({body}) => {
-                const {comment} = body
-                console.log(comment, "test332")
-                expect(comment).toEqual([{
-                    comment_id: 19,
-                    article_id: 8,
-                    votes: 0,
-                    created_at: expect.any(String),
-                    ...newComment,
-                }])
-            })
-    })
-    it("status 200, works for already existing user", () => {
         const article_id = 8
         const newComment = {
             author: "butter_bridge",
@@ -365,7 +343,7 @@ describe("post /api/articles/:article_id/comments", () => {
     it("status 404, returns Article not found if valid article_id doesn't exist", () => {
         const article_id = 999
         const newComment = {
-            author: "Hunter T",
+            author: "butter_bridge",
             body: 'I was not proud of what I had learned but I never doubted that it was worth knowing.'
         }
         return request(app)
@@ -380,7 +358,7 @@ describe("post /api/articles/:article_id/comments", () => {
     it("status 400, returns Bad Request! if invalid article_id is passed", () => {
         const article_id = 'cat'
         const newComment = {
-            author: "Hunter T",
+            author: "butter_bridge",
             body: 'I was not proud of what I had learned but I never doubted that it was worth knowing.'
         }
         return request(app)
@@ -411,7 +389,7 @@ describe("post /api/articles/:article_id/comments", () => {
     it("status 400, returns Bad request, input value missing if body data is missing", () => {
         const article_id = 8
         const newComment = {
-            author: "Hunter T",
+            author: "butter_bridge",
             body: null
         }
         return request(app)
@@ -427,7 +405,7 @@ describe("post /api/articles/:article_id/comments", () => {
     it("status 400, returns Bad request! if article_id data is missing", () => {
         const article_id = null
         const newComment = {
-            author: "Hunter T",
+            author: "butter_bridge",
             body: 'I was not proud of what I had learned but I never doubted that it was worth knowing.'
         }
         return request(app)
@@ -440,9 +418,57 @@ describe("post /api/articles/:article_id/comments", () => {
               });
         
     })
+    it("status 400, returns Bad request! if article_id data is missing", () => {
+        const article_id = null
+        const newComment = {
+            author: "butter_bridge",
+            body: 'I was not proud of what I had learned but I never doubted that it was worth knowing.'
+        }
+        return request(app)
+            .post(`/api/articles/${article_id}/comments`)
+            .send(newComment)
+            .expect(400)
+            .then(({body}) => {
+                console.log(body)
+                expect(body.msg).toBe("Bad request!");
+              });
+        
+    })
+    it("status 400, returns Bad request, input value missing if author data is empty string", () => {
+        const article_id = 8
+        const newComment = {
+            author: "",
+            body: 'I was not proud of what I had learned but I never doubted that it was worth knowing.'
+        }
+        return request(app)
+            .post(`/api/articles/${article_id}/comments`)
+            .send(newComment)
+            .expect(400)
+            .then(({body}) => {
+                console.log(body)
+                expect(body.msg).toBe("Bad request, input value missing");
+              });
+        
+    })
+    it("status 400, returns Bad request, input value missing if body data is empty string", () => {
+        const article_id = 8
+        const newComment = {
+            author: "butter_bridge",
+            body: ""
+        }
+        return request(app)
+            .post(`/api/articles/${article_id}/comments`)
+            .send(newComment)
+            .expect(400)
+            .then(({body}) => {
+                console.log(body)
+                expect(body.msg).toBe("Bad request, input value missing");
+              });
+        
+    })
 })
 
-describe.only("delete /api/comments/:comment_id", () => {
+describe("delete /api/comments/:comment_id", () => {
     it("status 204, responds with no content", () => {
         const comment_id = 1
         

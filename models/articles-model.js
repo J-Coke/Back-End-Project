@@ -108,14 +108,11 @@ exports.fetchArticleComments = async (article_id) => {
 }
 
 exports.sendArticleComment = async (article_id, author, body) => {
+    console.log(!author)
+    if (!author|| !body || !article_id) {
+        throw ({ status: 400, msg: 'Bad request, input value missing' })
+    } else {
 
-    const queryStr1 = `
-    INSERT INTO users
-        (username)
-    VALUES
-        ($1)
-    RETURNING *
-    ;`
     const queryStr2 = `
     INSERT INTO comments
         (article_id, author, body)
@@ -123,17 +120,9 @@ exports.sendArticleComment = async (article_id, author, body) => {
         ($1, $2, $3)
     RETURNING *
     ;`
-    const queryStr3 = `SELECT * FROM users WHERE username = $1`
-    const queryParams1 = [author]
     const queryParams2 = [article_id, author, body]
-    const queryParams3 = [author]
-
-    const userNew = await db.query(queryStr3, queryParams3)
-    console.log(userNew, 'usernew')
-    if (userNew.rows.length === 0) {
-        await db.query(queryStr1, queryParams1)
-    }
 
     const {rows} = await db.query(queryStr2, queryParams2)
     return rows
+    }
 }

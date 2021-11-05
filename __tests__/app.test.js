@@ -317,7 +317,7 @@ describe("GET /api/articles/:article_id/comments", () => {
     })
 })
 
-describe.only("post /api/articles/:article_id/comments", () => {
+describe("post /api/articles/:article_id/comments", () => {
     it("status 200, responds with posted comment", () => {
         const article_id = 8
         const newComment = {
@@ -498,6 +498,18 @@ describe("delete /api/comments/:comment_id", () => {
                 // const {content} = body
                 console.log(body, "content")
                 expect(body.msg).toBe('Bad request!')
+            })
+    })
+})
+
+describe.only("GET /api", () => {
+    it("status 200, responds with JSON file", () => {
+        return request(app)
+            .get("/api")
+            .expect(200)
+            .then(({text}) => {
+                console.log(text, 'bod bod')
+                expect(text).toBe("Path not found")
             })
     })
 })

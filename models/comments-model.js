@@ -12,8 +12,6 @@ exports.eraseComment = async (comment_id) => {
     RETURNING *
     ;`, queryParams)
         
-    console.log(rows.length, 'rpwlength')
-
     if (rows.length === 0) {
         throw ({ status: 404, msg: 'Comment not found' });
     } else {

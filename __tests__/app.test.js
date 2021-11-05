@@ -52,7 +52,6 @@ describe("GET /api/articles/:article_id", () => {
             .get(`/api/articles/${article_id}`)
             .expect(200)
             .then(({body}) => {
-                console.log(body)
                 expect(body).toEqual({
                     article: [{
                     author: "butter_bridge",
@@ -163,7 +162,6 @@ describe("GET /api/articles", () => {
             .expect(200)
             .then(({ body }) => {
                 const { articles } = body;
-                console.log(articles, 'arts')
                 expect(articles).toBeInstanceOf(Array);
                 expect(articles).toHaveLength(12);
                 articles.forEach((article) => {
@@ -229,7 +227,6 @@ describe("GET /api/articles", () => {
             .get(`/api/articles?sort_by=wrongColumn`)
             .expect(400)
             .then(({body}) => {
-                console.log(body)
                 expect(body.msg).toBe("Invalid sort query");
               });
     })
@@ -238,7 +235,6 @@ describe("GET /api/articles", () => {
             .get(`/api/articles?order=incorrect`)
             .expect(400)
             .then(({body}) => {
-                console.log(body)
                 expect(body.msg).toBe("Invalid order query");
               });
     })
@@ -247,7 +243,6 @@ describe("GET /api/articles", () => {
             .get(`/api/articles?topic=paper`)
             .expect(200)
             .then(({body}) => {
-                console.log(body)
                 const { articles } = body;
                 expect(articles).toEqual([]);
             })
@@ -257,7 +252,6 @@ describe("GET /api/articles", () => {
             .get(`/api/articles?topic=invalid`)
             .expect(404)
             .then(({body}) => {
-                console.log(body)
                 expect(body.msg).toBe("Invalid topic");
             })
     })
@@ -271,7 +265,6 @@ describe("GET /api/articles/:article_id/comments", () => {
             .expect(200)
             .then(({ body }) => {
                 const { comments } = body;
-                console.log(comments, 'comms')
                 expect(comments).toBeInstanceOf(Array);
                 expect(comments).toHaveLength(11);
                 comments.forEach((comment) => {
@@ -293,7 +286,6 @@ describe("GET /api/articles/:article_id/comments", () => {
             .get(`/api/articles/${article_id}/comments`)
             .expect(400)
             .then(({body}) => {
-                console.log(body)
                 expect(body.msg).toBe("Bad request!");
               });
     })
@@ -303,7 +295,6 @@ describe("GET /api/articles/:article_id/comments", () => {
             .get(`/api/articles/${article_id}/comments`)
             .expect(200)
             .then(({body}) => {
-                console.log(body)
                 const {comments} = body
                 expect(comments).toEqual([]);
               });
@@ -314,7 +305,6 @@ describe("GET /api/articles/:article_id/comments", () => {
             .get(`/api/articles/${article_id}/comments`)
             .expect(404)
             .then(({body}) => {
-                console.log(body)
                 expect(body.msg).toEqual('Not found');
               });
     })
@@ -333,7 +323,6 @@ describe("POST /api/articles/:article_id/comments", () => {
             .expect(200)
             .then(({body}) => {
                 const {comment} = body
-                console.log(comment, "test332")
                 expect(comment).toEqual([{
                     comment_id: 19,
                     article_id: 8,
@@ -354,7 +343,6 @@ describe("POST /api/articles/:article_id/comments", () => {
             .send(newComment)
             .expect(404)
             .then(({body}) => {
-                console.log(body)
                 expect(body.msg).toBe("Article not found");
               });
     })
@@ -369,7 +357,6 @@ describe("POST /api/articles/:article_id/comments", () => {
             .send(newComment)
             .expect(400)
             .then(({body}) => {
-                console.log(body)
                 expect(body.msg).toBe("Bad request!");
               });
     })
@@ -384,7 +371,6 @@ describe("POST /api/articles/:article_id/comments", () => {
             .send(newComment)
             .expect(400)
             .then(({body}) => {
-                console.log(body)
                 expect(body.msg).toBe("Bad request, input value missing");
               });
         
@@ -400,7 +386,6 @@ describe("POST /api/articles/:article_id/comments", () => {
             .send(newComment)
             .expect(400)
             .then(({body}) => {
-                console.log(body)
                 expect(body.msg).toBe("Bad request, input value missing");
               });
         
@@ -416,7 +401,6 @@ describe("POST /api/articles/:article_id/comments", () => {
             .send(newComment)
             .expect(400)
             .then(({body}) => {
-                console.log(body)
                 expect(body.msg).toBe("Bad request!");
               });
         
@@ -432,7 +416,6 @@ describe("POST /api/articles/:article_id/comments", () => {
             .send(newComment)
             .expect(400)
             .then(({body}) => {
-                console.log(body)
                 expect(body.msg).toBe("Bad request!");
               });
         
@@ -448,7 +431,6 @@ describe("POST /api/articles/:article_id/comments", () => {
             .send(newComment)
             .expect(400)
             .then(({body}) => {
-                console.log(body)
                 expect(body.msg).toBe("Bad request, input value missing");
               });
         
@@ -464,7 +446,6 @@ describe("POST /api/articles/:article_id/comments", () => {
             .send(newComment)
             .expect(400)
             .then(({body}) => {
-                console.log(body)
                 expect(body.msg).toBe("Bad request, input value missing");
               });
         
@@ -486,8 +467,6 @@ describe("DELETE /api/comments/:comment_id", () => {
             .delete(`/api/comments/${comment_id}`)
             .expect(404)
             .then(({body}) => {
-                // const {content} = body
-                console.log(body, "content")
                 expect(body.msg).toBe('Comment not found')
             })
     })
@@ -498,8 +477,6 @@ describe("DELETE /api/comments/:comment_id", () => {
             .delete(`/api/comments/${comment_id}`)
             .expect(400)
             .then(({body}) => {
-                // const {content} = body
-                console.log(body, "content")
                 expect(body.msg).toBe('Bad request!')
             })
     })
@@ -511,7 +488,6 @@ describe("GET /api", () => {
             .get("/api")
             .expect(200)
             .then(({text}) => {
-                console.log(typeof text, 'bod bod')
                 expect(typeof JSON.stringify(text)).toBe("string")
             })
     })

@@ -10,17 +10,16 @@ exports.getArticle = (req, res, next) => {
 }
 
 exports.patchArticle = (req, res, next) => {
-    console.log(req)
     const { inc_votes } = req.body;
     const { article_id } = req.params;
     if (Object.keys(req.body).length > 1) {
         throw ({status: 400, msg: "Bad request, unrecognised input"})
     } else {
-    amendArticle(article_id, inc_votes)
-    .then((article) => {
-        res.status(200).send({article})
-    })
-    .catch(next);
+        amendArticle(article_id, inc_votes)
+        .then((article) => {
+            res.status(200).send({article})
+        })
+        .catch(next);
     }
 }
 
@@ -28,14 +27,12 @@ exports.getArticles = (req, res, next) => {
     const queries = req.query;
     fetchArticles(queries)
     .then((articles) => {
-        console.log({articles}, "articles")
         res.status(200).send({articles})
     })
     .catch(next);
 }
 
 exports.getArticleComments = (req, res, next) => {
-    console.log(req.params, 'req')
     const { article_id } = req.params;
     fetchArticleComments(article_id)
     .then((comments) => {

@@ -86,7 +86,6 @@ exports.fetchArticles = async (queries) => {
 }
 
 exports.fetchArticleComments = async (article_id) => {
-    console.log(article_id)
     const queryStr = `
     SELECT comment_id, votes, created_at, author, body
     FROM comments
@@ -95,10 +94,8 @@ exports.fetchArticleComments = async (article_id) => {
     const queryParams = [article_id]
 
     const {rows} = await db.query(queryStr, queryParams)
-    console.log(rows, 'rows')
     if (rows.length === 0 && article_id) {
         const result = await db.query(`SELECT * FROM articles WHERE article_id = $1`, [article_id])
-        console.log(result.rows, 'resultrows')
         if (result.rows.length === 0) {
             return Promise.reject({ status: 404, msg: 'Not found' })
         }
@@ -108,7 +105,6 @@ exports.fetchArticleComments = async (article_id) => {
 }
 
 exports.sendArticleComment = async (article_id, author, body) => {
-    console.log(!author)
     if (!author|| !body || !article_id) {
         throw ({ status: 400, msg: 'Bad request, input value missing' })
     } else {

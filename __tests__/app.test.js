@@ -52,6 +52,7 @@ describe("GET /api/articles/:article_id", () => {
             .get(`/api/articles/${article_id}`)
             .expect(200)
             .then(({body}) => {
+                console.log(body)
                 expect(body).toEqual({
                     article: [{
                     author: "butter_bridge",
@@ -162,6 +163,7 @@ describe("GET /api/articles", () => {
             .expect(200)
             .then(({ body }) => {
                 const { articles } = body;
+                console.log(articles, 'arts')
                 expect(articles).toBeInstanceOf(Array);
                 expect(articles).toHaveLength(12);
                 articles.forEach((article) => {
@@ -261,7 +263,7 @@ describe("GET /api/articles", () => {
     })
 })
 
-describe("GET /api/articles/:article_id/comments", () => {
+describe.only("GET /api/articles/:article_id/comments", () => {
     it("status 200, responds with array of comment objects for particular article", () => {
         const article_id = 1;
         return request(app)
@@ -269,6 +271,7 @@ describe("GET /api/articles/:article_id/comments", () => {
             .expect(200)
             .then(({ body }) => {
                 const { comments } = body;
+                console.log(comments, 'comms')
                 expect(comments).toBeInstanceOf(Array);
                 expect(comments).toHaveLength(11);
                 comments.forEach((comment) => {
@@ -502,14 +505,14 @@ describe("delete /api/comments/:comment_id", () => {
     })
 })
 
-describe.only("GET /api", () => {
+describe("GET /api", () => {
     it("status 200, responds with JSON file", () => {
         return request(app)
             .get("/api")
             .expect(200)
             .then(({text}) => {
-                console.log(text, 'bod bod')
-                expect(text).toBe("Path not found")
+                console.log(typeof text, 'bod bod')
+                expect(typeof JSON.stringify(text)).toBe("string")
             })
     })
 })

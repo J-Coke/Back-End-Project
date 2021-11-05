@@ -7,5 +7,5 @@ exports.fetchAllEndpoints = async () => {
 
     console.log(fileContents)
 
-    return fileContents
+    return fileContents;
 }

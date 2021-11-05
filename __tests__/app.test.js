@@ -86,7 +86,7 @@ describe("GET /api/articles/:article_id", () => {
     })
 })
 
-describe.ONLY("PATCH /api/articles/:article_id", () => {
+describe("PATCH /api/articles/:article_id", () => {
     it("status 200, responds with updated article", () => {
         const article_id = 3
         const newVote = 99
@@ -320,7 +320,7 @@ describe("GET /api/articles/:article_id/comments", () => {
     })
 })
 
-describe("post /api/articles/:article_id/comments", () => {
+describe("POST /api/articles/:article_id/comments", () => {
     it("status 200, responds with posted comment", () => {
         const article_id = 8
         const newComment = {
@@ -471,7 +471,7 @@ describe("post /api/articles/:article_id/comments", () => {
     })
 })
 
-describe("delete /api/comments/:comment_id", () => {
+describe("DELETE /api/comments/:comment_id", () => {
     it("status 204, responds with no content", () => {
         const comment_id = 1
         

@@ -529,21 +529,21 @@ describe.only("GET /api/users/:username", () => {
             })
     })
     // it("status 400, when passed invalid article_id", () => {
-    //     const article_id = 'INVALID'
+    //     const username = 9
     //     return request(app)
-    //         .get(`/api/articles/${article_id}`)
+    //         .get(`/api/users/${username}`)
     //         .expect(400)
     //         .then(({body}) => {
     //             expect(body.msg).toBe("Bad request!")
     //         })
     // })
-    // it("status 404, when passed valid article_id with no correspoding article", () => {
-    //     const article_id = 999;
-    //     return request(app)
-    //         .get(`/api/articles/${article_id}`)
-    //         .expect(404)
-    //         .then(({body}) => {
-    //             expect(body.msg).toBe("Article not found")
-    //         })
-    // })
+    it("status 404, when passed valid article_id with no correspoding article", () => {
+        const username = 'non_existant';
+        return request(app)
+            .get(`/api/users/${username}`)
+            .expect(404)
+            .then(({body}) => {
+                expect(body.msg).toBe("User not found")
+            })
+    })
 })

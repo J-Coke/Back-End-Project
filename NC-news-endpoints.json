@@ -8,7 +8,8 @@
     "exampleResponse": {
       "topics": [
         { "slug": "coding", "description": "Code is love, code is life" },
-        { "slug": "football", "description": "Footie!" }]
+        { "slug": "football", "description": "Footie!" }
+      ]
     }
   },
   "GET /api/articles": {

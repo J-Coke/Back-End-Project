@@ -512,3 +512,38 @@ describe("GET /api/users", () => {
               });
     })
 })
+
+describe.only("GET /api/users/:username", () => {
+    it("status 200, responds with a matching user when passed a username", () => {
+        const username = "icellusedkars";
+        return request(app)
+            .get(`/api/users/${username}`)
+            .expect(200)
+            .then(({body}) => {
+                expect(body).toEqual({
+                    user: [{
+                    username: "icellusedkars",
+                    avatar_url: "https://avatars2.githubusercontent.com/u/24604688?s=460&v=4",
+                    name: "sam",
+                    }]})
+            })
+    })
+    // it("status 400, when passed invalid article_id", () => {
+    //     const article_id = 'INVALID'
+    //     return request(app)
+    //         .get(`/api/articles/${article_id}`)
+    //         .expect(400)
+    //         .then(({body}) => {
+    //             expect(body.msg).toBe("Bad request!")
+    //         })
+    // })
+    // it("status 404, when passed valid article_id with no correspoding article", () => {
+    //     const article_id = 999;
+    //     return request(app)
+    //         .get(`/api/articles/${article_id}`)
+    //         .expect(404)
+    //         .then(({body}) => {
+    //             expect(body.msg).toBe("Article not found")
+    //         })
+    // })
+})

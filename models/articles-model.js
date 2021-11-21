@@ -19,7 +19,7 @@ exports.fetchArticle = (article_id) => {
         return Promise.reject({ status: 404, msg: "Article not found" });
       } else {
         console.log(rows[0]);
-        return rows;
+        return rows[0];
       }
     });
 };

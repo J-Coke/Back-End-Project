@@ -45,7 +45,7 @@ describe("GET /api/topics", () => {
   });
 });
 
-describe.only("GET /api/articles/:article_id", () => {
+describe("GET /api/articles/:article_id", () => {
   it("status 200, responds with a matching article when passed an article id", () => {
     const article_id = 1;
     return request(app)

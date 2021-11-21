@@ -1,5 +1,5 @@
-const db = require('../');
-const format = require('pg-format');
+const db = require("../");
+const format = require("pg-format");
 const seed = (data) => {
   const { articleData, commentData, topicData, userData } = data;
   return db
@@ -18,7 +18,7 @@ const seed = (data) => {
         CREATE TABLE topics (
           slug VARCHAR PRIMARY KEY,
           description VARCHAR
-        );`)
+        );`);
     })
     .then(() => {
       return db.query(`
@@ -26,7 +26,7 @@ const seed = (data) => {
           username VARCHAR PRIMARY KEY,
           avatar_url VARCHAR,
           name VARCHAR
-        );`)
+        );`);
     })
     .then(() => {
       return db.query(`
@@ -34,11 +34,11 @@ const seed = (data) => {
           article_id SERIAL PRIMARY KEY,
           title VARCHAR NOT NULL,
           body TEXT NOT NULL,
-          votes INT DEFAULT 0 NOT NULL,
+          votes INT DEFAULT 0,
           topic VARCHAR NOT NULL REFERENCES topics(slug),
           author VARCHAR NOT NULL REFERENCES users(username),
-          created_at TIMESTAMP NOT NULL
-        );`)
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );`);
     })
     .then(() => {
       return db.query(`
@@ -47,9 +47,9 @@ const seed = (data) => {
           author VARCHAR NOT NULL REFERENCES users(username),
           article_id INT NOT NULL REFERENCES articles(article_id),
           votes INT DEFAULT 0,
-          created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
           body TEXT NOT NULL
-        );`)
+        );`);
     })
     .then(() => {
       const topicInput = format(
@@ -58,13 +58,10 @@ const seed = (data) => {
         VALUES
         %L RETURNING *;`,
         topicData.map((topic) => {
-          return [
-            topic.slug,
-            topic.description
-          ]
+          return [topic.slug, topic.description];
         })
-      )
-      return db.query(topicInput)
+      );
+      return db.query(topicInput);
     })
     .then(() => {
       const userInput = format(
@@ -73,14 +70,10 @@ const seed = (data) => {
         VALUES
         %L RETURNING *;`,
         userData.map((user) => {
-          return [
-            user.username,
-            user.avatar_url,
-            user.name
-          ]
+          return [user.username, user.avatar_url, user.name];
         })
-      )
-      return db.query(userInput)
+      );
+      return db.query(userInput);
     })
     .then(() => {
       const articleInput = format(
@@ -95,11 +88,11 @@ const seed = (data) => {
             article.votes,
             article.topic,
             article.author,
-            article.created_at
-          ]
+            article.created_at,
+          ];
         })
-      )
-      return db.query(articleInput)
+      );
+      return db.query(articleInput);
     })
     .then(() => {
       const commentInput = format(
@@ -113,12 +106,12 @@ const seed = (data) => {
             comment.article_id,
             comment.votes,
             comment.created_at,
-            comment.body
-          ]
+            comment.body,
+          ];
         })
-      )
-      return db.query(commentInput)
-    })
+      );
+      return db.query(commentInput);
+    });
 };
 
 module.exports = seed;

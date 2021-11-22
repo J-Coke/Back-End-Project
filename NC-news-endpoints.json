@@ -51,7 +51,7 @@
     "description": "serves an array containing specified article",
     "queries": [],
     "exampleResponse": {
-      "article": [
+      "article": 
         {
           "article_id": 1,
           "title": "Living in the shadow of a great man",
@@ -62,7 +62,7 @@
           "created_at": "2020-07-09T20:11:00.000Z",
           "comment_count": "11"
         }
-      ]
+      
     }
   }
   "GET /api/articles/:article_id/comments": {
@@ -101,13 +101,12 @@
     "description": "serves an array containing specified user",
     "queries": [],
     "exampleResponse": {
-      "user": [
+      "user": 
         {
           "username": "cooljmessy",
           "avatar_url": "https://vignette.wikia.nocookie.net/mrmen/images/1/1a/MR_MESSY_4A.jpg/revision/latest/scale-to-width-down/250?cb=20170730171002",
           "name": "Peter Messy"
         }
-      ]
     }
   },
   "DELETE /api/comments/:comment_id": {
@@ -120,7 +119,7 @@
     "queries": [],
     "exampleBody": { "inc_votes": 15},
     "exampleResponse": {
-      "article": [
+      "article": 
         {
           "author": "butter_bridge",
           "title": "Living in the shadow of a great man",
@@ -130,7 +129,6 @@
           "created_at": "2020-07-09T20:11:00.000Z",
           "votes": 115
         }
-      ]
     }
   }
   "POST /api/articles/:article_id/comments": {

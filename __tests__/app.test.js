@@ -53,18 +53,16 @@ describe("GET /api/articles/:article_id", () => {
       .expect(200)
       .then(({ body }) => {
         expect(body).toEqual({
-          article: [
-            {
-              author: "butter_bridge",
-              title: "Living in the shadow of a great man",
-              article_id: 1,
-              body: "I find this existence challenging",
-              topic: "mitch",
-              created_at: "2020-07-09T20:11:00.000Z",
-              votes: 100,
-              comment_count: "11",
-            },
-          ],
+          article: {
+            author: "butter_bridge",
+            title: "Living in the shadow of a great man",
+            article_id: 1,
+            body: "I find this existence challenging",
+            topic: "mitch",
+            created_at: "2020-07-09T20:11:00.000Z",
+            votes: 100,
+            comment_count: "11",
+          },
         });
       });
   });
@@ -99,18 +97,40 @@ describe("PATCH /api/articles/:article_id", () => {
       .expect(200)
       .then(({ body }) => {
         expect(body).toEqual({
-          article: [
-            {
-              author: "icellusedkars",
-              title: "Eight pug gifs that remind me of mitch",
-              article_id: 3,
-              body: "some gifs",
-              topic: "mitch",
-              created_at: "2020-11-03T09:12:00.000Z",
-              votes: 99,
-            },
-          ],
+          article: {
+            author: "icellusedkars",
+            title: "Eight pug gifs that remind me of mitch",
+            article_id: 3,
+            body: "some gifs",
+            topic: "mitch",
+            created_at: "2020-11-03T09:12:00.000Z",
+            votes: 99,
+          },
         });
+      });
+  });
+  it("status 400, when passed invalid id", () => {
+    const article_id = "cat";
+    const newVote = 1;
+    const patchObj = { inc_votes: newVote };
+    return request(app)
+      .patch(`/api/articles/${article_id}`)
+      .send(patchObj)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad request!");
+      });
+  });
+  it("status 400, when passed non-existant id", () => {
+    const article_id = 9999;
+    const newVote = 1;
+    const patchObj = { inc_votes: newVote };
+    return request(app)
+      .patch(`/api/articles/${article_id}`)
+      .send(patchObj)
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Article not found");
       });
   });
   it("status 400, when passed invalid new_vote", () => {
@@ -326,18 +346,17 @@ describe("POST /api/articles/:article_id/comments", () => {
     return request(app)
       .post(`/api/articles/${article_id}/comments`)
       .send(newComment)
-      .expect(200)
+      .expect(201)
       .then(({ body }) => {
-        const { comment } = body;
-        expect(comment).toEqual([
-          {
+        expect(body).toEqual({
+          comment: {
             comment_id: 19,
             article_id: 8,
             votes: 0,
             created_at: expect.any(String),
             ...newComment,
           },
-        ]);
+        });
       });
   });
   it("status 404, returns Article not found if valid article_id doesn't exist", () => {
@@ -521,14 +540,12 @@ describe("GET /api/users/:username", () => {
       .expect(200)
       .then(({ body }) => {
         expect(body).toEqual({
-          user: [
-            {
-              username: "icellusedkars",
-              avatar_url:
-                "https://avatars2.githubusercontent.com/u/24604688?s=460&v=4",
-              name: "sam",
-            },
-          ],
+          user: {
+            username: "icellusedkars",
+            avatar_url:
+              "https://avatars2.githubusercontent.com/u/24604688?s=460&v=4",
+            name: "sam",
+          },
         });
       });
   });

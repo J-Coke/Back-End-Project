@@ -11,7 +11,7 @@ exports.fetchUser = (username) => {
       if (rows.length === 0) {
         throw { status: 404, msg: "User not found" };
       } else {
-        return rows;
+        return rows[0];
       }
     });
 };

@@ -52,7 +52,7 @@ exports.postArticleComment = (req, res, next) => {
   const { author, body } = req.body;
   sendArticleComment(article_id, author, body)
     .then((comment) => {
-      res.status(200).send({ comment });
+      res.status(201).send({ comment });
     })
     .catch(next);
 };

@@ -1,14 +1,20 @@
 const express = require("express");
-const { handleCustomErrors, handle500Errors, handlePsqlErrors } = require("./errors.js");
+const {
+  handleCustomErrors,
+  handle500Errors,
+  handlePsqlErrors,
+} = require("./errors.js");
 const apiRouter = require("./routes/api-router.js");
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 app.use("/api", apiRouter);
 
 app.all("/*", (req, res) => {
-    res.status(404).send({ msg: "Path not found" });
+  res.status(404).send({ msg: "Path not found" });
 });
 
 app.use(handleCustomErrors);

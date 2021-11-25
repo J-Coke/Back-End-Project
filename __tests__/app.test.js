@@ -283,7 +283,7 @@ describe("GET /api/articles", () => {
   });
 });
 
-describe("GET /api/articles/:article_id/comments", () => {
+describe.only("GET /api/articles/:article_id/comments", () => {
   it("status 200, responds with array of comment objects for particular article", () => {
     const article_id = 1;
     return request(app)
@@ -291,6 +291,7 @@ describe("GET /api/articles/:article_id/comments", () => {
       .expect(200)
       .then(({ body }) => {
         const { comments } = body;
+        console.log(comments);
         expect(comments).toBeInstanceOf(Array);
         expect(comments).toHaveLength(11);
         comments.forEach((comment) => {

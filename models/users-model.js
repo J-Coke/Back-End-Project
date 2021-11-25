@@ -8,6 +8,7 @@ exports.fetchUser = (username) => {
   return db
     .query(`SELECT * FROM users WHERE username = $1;`, [username])
     .then(({ rows }) => {
+      console.log(rows);
       if (rows.length === 0) {
         throw { status: 404, msg: "User not found" };
       } else {

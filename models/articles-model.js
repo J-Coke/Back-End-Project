@@ -72,6 +72,7 @@ exports.fetchArticles = async (queries) => {
         "topic",
         "created_at",
         "votes",
+        "comment_count",
       ].includes(sort_by)
     ) {
       queryStr += ` ORDER BY articles.${sort_by}`;

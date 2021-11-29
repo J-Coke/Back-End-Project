@@ -248,6 +248,17 @@ describe("GET /api/articles", () => {
         expect(articles[10].article_id).toEqual(7);
       });
   });
+  it("status 200, responds with an articles array sorted by number of comments", () => {
+    return request(app)
+      .get(`/api/articles?sort_by=comment_count&order=ASC`)
+      .expect(200)
+      .then(({ body }) => {
+        const { articles } = body;
+        expect(articles).toHaveLength(12);
+        expect(articles[0].comment_count).toEqual("0");
+        expect(articles[11].comment_count).toEqual("11");
+      });
+  });
   it("status 400, responds with Invalid sort query when sort column does not exist", () => {
     return request(app)
       .get(`/api/articles?sort_by=wrongColumn`)
@@ -283,7 +294,7 @@ describe("GET /api/articles", () => {
   });
 });
 
-describe.only("GET /api/articles/:article_id/comments", () => {
+describe("GET /api/articles/:article_id/comments", () => {
   it("status 200, responds with array of comment objects for particular article", () => {
     const article_id = 1;
     return request(app)

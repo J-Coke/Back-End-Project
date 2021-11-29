@@ -75,7 +75,7 @@ exports.fetchArticles = async (queries) => {
         "comment_count",
       ].includes(sort_by)
     ) {
-      queryStr += ` ORDER BY articles.${sort_by}`;
+      queryStr += ` ORDER BY ${sort_by}`;
     } else {
       throw { status: 400, msg: "Invalid sort query" };
     }

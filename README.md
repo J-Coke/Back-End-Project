@@ -2,7 +2,7 @@
 
 ## Link to hosted version
 
-This project is hosted at https://jc-news-app.herokuapp.com/api
+This endpoints of this project can be explored at https://jc-news-app.herokuapp.com/api
 
 ## Summary
 
@@ -11,7 +11,7 @@ The aim of this project was to produce a news api that:
   - Created tables and seeded a database
   - Created a variety endpoints
 
-This application utilises my backend api project which is hosted here: https://jc-news-app.herokuapp.com/api and for which the code can be found here: https://github.com/J-Coke/Back-End-Project
+This project is utilised by my front end news application which is hosted here: https://jc-news.netlify.app and for which the code can be found here: https://github.com/J-Coke/nc-news
 
 ## Setup
 

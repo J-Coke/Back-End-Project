@@ -4,7 +4,7 @@
 
 This endpoints of this project can be explored at https://jc-news-app.herokuapp.com/api
 
-The front end app built to use the endpoints of this project can be found here: https://jc-news.netlify.app
+The front end app which utilises the endpoints created in this project can be found here: https://jc-news.netlify.app
 
 ## Summary
 

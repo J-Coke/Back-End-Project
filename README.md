@@ -1,4 +1,4 @@
-# NC News - Front End Project
+# Back End Project
 
 ## Link to hosted version
 
